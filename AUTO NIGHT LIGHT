@@ -1,0 +1,45 @@
+int in1 = 6;
+int sensor = 7;
+int led = 6;
+unsigned long t=0;
+
+void setup() 
+{
+  Serial.begin(9600);
+  pinMode(in1, OUTPUT);
+  pinMode(sensor, INPUT);
+  pinMode(led, OUTPUT);
+  
+  digitalWrite(in1,HIGH);
+  digitalWrite(led,LOW);
+
+  while(millis()<500)
+  {
+    digitalWrite(led,HIGH);
+    delay(50);
+    digitalWrite(led,LOW);
+    delay(50);
+  }
+  digitalWrite(led,LOW);
+  
+}
+
+
+void loop() 
+{
+  digitalWrite(in1,HIGH);
+  digitalWrite(led,LOW);
+  if(digitalRead(sensor)==HIGH)
+  {
+   t=millis();
+   while(millis()<(t+500))
+   {
+   digitalWrite(in1,LOW);
+   digitalWrite(led,HIGH);
+     if((millis()>(t+100))&&(digitalRead(sensor)==HIGH))
+      {
+       t=millis();
+      }
+   }
+  }
+}
